@@ -1,7 +1,6 @@
 package com.org.let.repositories;
 
-import com.org.let.models.ModelProduct;
-import com.org.let.models.ModelProductDetails;
+import com.org.let.entities.ModelProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,4 +21,7 @@ public interface ProductRepository extends JpaRepository<ModelProduct, Long> {
 
     @Query("SELECT p, pt FROM ModelProduct p JOIN p.productTypeId pt WHERE p.id = :id")
     List<Object[]> findProductsWithTypes(Long id);
+
+    @Query("SELECT pt,p FROM ModelProductType pt RIGHT JOIN ModelProduct p ON p.productTypeId = pt WHERE pt.productTypeId = :productTypeId")
+    List<Object[]> findProductsWithTypeId(Long productTypeId);
 }

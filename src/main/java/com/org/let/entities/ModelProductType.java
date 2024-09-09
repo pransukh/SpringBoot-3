@@ -1,14 +1,14 @@
-package com.org.let.models;
+package com.org.let.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="PRODUCT_TYPE")
 @Data
-@Getter
-@Setter
-@ToString
 @RequiredArgsConstructor
 public class ModelProductType {
 
@@ -25,5 +25,10 @@ public class ModelProductType {
 
     @Column(name ="IMAGE_URL")
     String imageIconURI;
+
+    @OneToMany(mappedBy = "productTypeId")
+    @JsonManagedReference
+    private List<ModelProduct> modalProducts;
+
 
 }

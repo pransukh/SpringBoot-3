@@ -1,4 +1,4 @@
-package com.org.let.models;
+package com.org.let.entities;
 
 // Product.java
 

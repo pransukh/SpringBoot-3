@@ -1,6 +1,6 @@
 package com.org.let.repositories;
 
-import com.org.let.models.ModelProductDetails;
+import com.org.let.entities.ModelProductDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

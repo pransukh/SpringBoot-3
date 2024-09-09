@@ -1,7 +1,8 @@
 package com.org.let.repositories;
 
-import com.org.let.models.ModelProductType;
+import com.org.let.entities.ModelProductType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface ProductTypeRepository extends JpaRepository<ModelProductType, L
 
 
     Optional<ModelProductType> findByProductTypeName(String name);
+
+    @Query("SELECT p FROM ModelProductType p LEFT JOIN FETCH p.modalProducts WHERE p.productTypeId = :productTypeId")
+    ModelProductType findByProductTypeId(Long productTypeId);
+
 }

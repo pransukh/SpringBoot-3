@@ -1,6 +1,5 @@
 package com.org.let.request.productType;
 
-import com.org.let.models.ModelProductType;
 import lombok.Getter;
 import lombok.Setter;
 

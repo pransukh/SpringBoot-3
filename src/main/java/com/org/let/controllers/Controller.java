@@ -1,8 +1,9 @@
 package com.org.let.controllers;
 
-import com.org.let.models.ModelProduct;
+import com.org.let.entities.ModelProduct;
 import com.org.let.request.productType.RequestProduct;
 import com.org.let.response.ProductResponseDTO;
+import com.org.let.response.ProductTypeResponseDTO;
 import com.org.let.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -43,6 +44,18 @@ public class Controller {
         return productResponseDTO;
     }
 
+    @GetMapping("search/type/id/{id}")
+    public ProductTypeResponseDTO getAllProductsByTypeId(@PathVariable("id") Long id) {
+        ProductTypeResponseDTO productTypeResponseDTO = productService.getProductByTypeID(id);
+        return productTypeResponseDTO;
+    }
+
+    @GetMapping("search/type/name/{name}")
+    public ProductResponseDTO getAllProductsByTypeName(@PathVariable("name") Long id) {
+        ProductResponseDTO productResponseDTO = productService.getProductByID(id);
+        return productResponseDTO;
+    }
+
     @GetMapping("search/name/{name}")
     public ModelProduct getProductByName(@PathVariable("name") String name) {
         Optional<ModelProduct> product = productService.getProductByName(name);
@@ -55,12 +68,16 @@ public class Controller {
     @GetMapping("search/query")
     public ModelProduct getProductByQuery(@RequestParam("name") String name,
                                           @RequestParam(value = "id", required = false) int id) {
+
         Optional<ModelProduct> product = productService.getProductByQuery(name,id);
         if(product.isPresent()){
             return product.get();
         }else{
             return null;
         }
+
+
+
     }
 
     @PostMapping("add/product")

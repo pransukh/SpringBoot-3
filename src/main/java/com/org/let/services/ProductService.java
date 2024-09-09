@@ -1,18 +1,19 @@
 package com.org.let.services;
 
 // ProductService.java
-import com.org.let.models.ModelProduct;
-import com.org.let.models.ModelProductType;
-import com.org.let.models.ModelProductDetails;
+import com.org.let.entities.ModelProduct;
+import com.org.let.entities.ModelProductType;
+import com.org.let.entities.ModelProductDetails;
 import com.org.let.repositories.ProductDetailRepository;
 import com.org.let.repositories.ProductRepository;
 import com.org.let.repositories.ProductTypeRepository;
 import com.org.let.request.productType.RequestProduct;
 import com.org.let.request.productType.RequestProductType;
-import com.org.let.response.ProductDetailsDTO;
-import com.org.let.response.ProductResponseDTO;
+import com.org.let.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,16 +39,63 @@ public class ProductService {
         if(!product.isEmpty()){
             for(Object[] obj:product){
                 ModelProduct product1 = (ModelProduct)obj[0];
-                ModelProductType  productType = (ModelProductType) obj[1];
-                System.out.println(product1.getId());
-                System.out.println(product1.getName());
-                System.out.println(product1.getProductTypeId().getProductTypeId());
-                System.out.println(product1.getProductTypeId().getProductTypeName());
+                productResponseDTO.setProductName(product1.getName());
+                productResponseDTO.setImageUrl(product1.getProductDetailId().getImage());
+                productResponseDTO.setPrice(product1.getProductDetailId().getPrice());
+                productResponseDTO.setId(product1.getId());
+                productResponseDTO.setName(product1.getName());
+                productResponseDTO.setDescription(product1.getDescription());
+                productResponseDTO.setProductTypeId(product1.getProductTypeId().getProductTypeId());
+                productResponseDTO.setIsEnable(product1.getProductTypeId().getIsEnabled());
+                productResponseDTO.setProductTypeImageUri(product1.getProductTypeId().getImageIconURI());
+                productResponseDTO.setType(product1.getProductTypeId().getProductTypeName());
+                productResponseDTO.setOperation(product1.getProductDetailId().getOperation());
+
 
 
             }
         }
-        return null;
+        return productResponseDTO;
+    }
+
+    public ProductTypeResponseDTO getProductByTypeID(Long id) {
+        ProductTypeResponseDTO productTypeResponseDTO = new ProductTypeResponseDTO();
+
+        List<ProductResponseForTypeDTO> productResponseForTypeDTOList = new ArrayList<>();
+        List<Object[]> product = productRepository.findProductsWithTypeId(id);
+
+
+        ModelProductType productType = (ModelProductType) product.get(0)[0];
+        productTypeResponseDTO.setProductTypeId(productType.getProductTypeId());
+        productTypeResponseDTO.setProductTypeName(productType.getProductTypeName());
+        productTypeResponseDTO.setImageIconURI(productType.getImageIconURI());
+        productTypeResponseDTO.setIsEnabled(productType.getIsEnabled());
+
+
+        if(!product.isEmpty()){
+            for(Object[] obj:product){
+                ModelProduct product1 = (ModelProduct)obj[1];
+                ProductResponseForTypeDTO productResponseForTypeDTO = new ProductResponseForTypeDTO();
+                ProductDetailsDTO productDetailsDTO = new ProductDetailsDTO();
+
+                productDetailsDTO.setDetails_id(product1.getProductDetailId().getProductDetailId());
+                productDetailsDTO.setPrice(product1.getProductDetailId().getPrice());
+                productDetailsDTO.setRating(product1.getProductDetailId().getRating());
+                productDetailsDTO.setOperation(product1.getProductDetailId().getOperation());
+                productDetailsDTO.setBuilt(product1.getProductDetailId().getBuilt());
+                productDetailsDTO.setImage(product1.getProductDetailId().getImage());
+                productDetailsDTO.setWarranty(product1.getProductDetailId().getWarranty());
+
+                productResponseForTypeDTO.setProductDetailsDTO(productDetailsDTO);
+
+                productResponseForTypeDTO.setProductId(product1.getId());
+                productResponseForTypeDTO.setProductName(product1.getName());
+                productResponseForTypeDTO.setDescription(product1.getDescription());
+                productResponseForTypeDTOList.add(productResponseForTypeDTO);
+            }
+            productTypeResponseDTO.setProductResponseForTypeDTOList(productResponseForTypeDTOList);
+        }
+        return productTypeResponseDTO;
     }
 
     public Optional<ModelProduct> getProductByName(String name) {
@@ -71,6 +119,20 @@ public class ProductService {
         modelProductType.setIsEnabled(Long.parseLong(requestProductType.getEnabled()));
         productTypeRepository.save(modelProductType);
         return true;
+    }
+
+    public AllProdsInType getAllProductsWithType(Long productType){
+
+        ModelProductType returnData = productTypeRepository.findByProductTypeId(productType);
+        AllProdsInType allProdsInType = new AllProdsInType();
+        allProdsInType.setType(returnData.getProductTypeId());
+
+        List<ModelProduct> modelProductList = new ArrayList<>();
+        for(ModelProduct m: returnData.getModalProducts()){
+            modelProductList.add(m);
+        }
+        allProdsInType.setModelProductList(modelProductList);
+        return allProdsInType;
     }
 
     public boolean addProduct(RequestProduct requestProduct){
