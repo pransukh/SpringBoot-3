@@ -1,0 +1,12 @@
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\configurations\WebConfig.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\controllers\Controller.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\controllers\ControllerProductType.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\controllers\ProductDetails.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\models\ModelProductType.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\models\Product.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\models\ProductDetails.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\ProductListApplication.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\repositories\ProductRepository.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\repositories\ProductTypeRepository.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\request\productType\RequestProductType.java
+C:\DEV\SPRING_CLI\ProductList\src\main\java\com\org\let\services\ProductService.java

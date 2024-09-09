@@ -1,0 +1,11 @@
+com\org\let\configurations\WebConfig.class
+com\org\let\repositories\ProductTypeRepository.class
+com\org\let\models\Product.class
+com\org\let\controllers\ProductDetails.class
+com\org\let\repositories\ProductRepository.class
+com\org\let\controllers\Controller.class
+com\org\let\models\ProductDetails.class
+com\org\let\services\ProductService.class
+com\org\let\ProductListApplication.class
+com\org\let\controllers\ControllerProductType.class
+com\org\let\models\ModelProductType.class
